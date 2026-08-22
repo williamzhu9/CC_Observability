@@ -3,4 +3,13 @@ target/
 dbt_packages/
 logs/
 CC_Statements/
-Credit Card Spend.pbix
+*.pbix
+
+# Local credentials and secrets
+.env
+.env.*
+!.env.example
+profiles.yml
+*-key.json
+service-account*.json
+credentials*.json
