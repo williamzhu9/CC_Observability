@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: dim_ws__transaction_categories
+    description: >
+      Dimension table of merchant-to-category mappings, including the model's
+      reasoning for each classification. Currently a passthrough of
+      int_ws__classify_transactions; intended as the join target for
+      categorizing transactions in downstream fact models.
+    columns:
+      - name: categorization_key
+        description: "Unique key for the transaction generated from the merchant and category"
+        data_tests:
+          - not_null
+          - unique
+
+      - name: merchant
+        description: Raw merchant string, used as the join key to fact tables.
+        tests:
+          - unique
+          - not_null
+
+      - name: category
+        description: Spending category assigned to the merchant.
+        tests:
+          - not_null
+
+      - name: reasoning
+        description: Model's one-sentence justification for the assigned category.
+
+      - name: generation_status
+        description: Status returned by AI.GENERATE_TABLE for this row's classification call. Empty string indicates success.

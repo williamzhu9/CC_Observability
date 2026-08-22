@@ -1,0 +1,36 @@
+version: 2
+
+sources:
+  - name: cc_statement_observability
+    description: "Raw CC statement data, loaded monthly via load_cc_statement.py (GCS -> BigQuery, append)"
+    database: cc-statement-observability
+    schema: cc_obs_raw
+    tables:
+      - name: cc_statements_raw
+        description: >
+          Continuously growing table of raw CC statement transactions,
+          appended monthly from CCStatement-{Mon}{Year}.csv files landed in
+          gs://your-bucket-name/raw/cc_statements/. One row per transaction line.
+        columns:
+          - name: transaction_date
+            description: "Date the transaction occurred"
+            data_type: date
+          - name: post_date
+            description: "Date the transaction posted"
+            data_type: date
+          - name: type
+            description: "Transaction type/category"
+            data_type: string
+          - name: details
+            description: "Free-text transaction description"
+            data_type: string
+          - name: amount
+            description: "Transaction amount"
+            data_type: numeric
+          - name: currency
+            description: "Currency code"
+            data_type: string
+        loaded_at_field: post_date
+        freshness:
+          warn_after: {count: 32, period: day}   # monthly cadence, so give some slack
+          error_after: {count: 45, period: day}

@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: int_ws__classify_transactions
+    description: >
+      Incremental model that classifies distinct merchant strings into spending
+      categories using BigQuery ML's remote Gemini model (AI.GENERATE_TABLE).
+      Only new, previously unseen merchant strings are sent to the LLM on each run.
+    columns:
+      - name: categorization_key
+        description: "Unique key for the transaction generated from the merchant and category"
+        data_tests:
+          - not_null
+          - unique
+
+      - name: merchant
+        description: Raw merchant string from the credit card statement, as it appears in the source data. Serves as the unique key for this model.
+        tests:
+          - unique
+          - not_null
+
+      - name: category
+        description: Spending category assigned to the merchant by the Gemini remote model (e.g. Food & Dining, Gas, Retail, Rent, Utilities, Health, Fitness, Fees, Other).
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - 'Food & Dining'
+                - 'Transportation & Travel'
+                - 'Retail'
+                - 'Rent & Utilities'
+                - 'Health & Fitness'
+                - 'Fees'
+                - 'Groceries'
+                - 'Entertainment'
+                - 'Other'
+
+      - name: reasoning
+        description: Model's one-sentence justification for the assigned category — useful for auditing misclassifications.
+
+      - name: generation_status
+        description: Status returned by AI.GENERATE_TABLE for this row's API call. Empty string indicates success; any other value indicates the call failed and category/reasoning may be unreliable or null.

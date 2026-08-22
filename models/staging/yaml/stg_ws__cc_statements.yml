@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: stg_ws__cc_statements
+    description: "Staged CC statement transactions, renamed/cleaned from the raw source table."
+    columns:
+      - name: transaction_key
+        description: "Unique key for the transaction generated from the date, type, details, and amount"
+        data_tests:
+          - not_null
+          - unique
+
+      - name: transaction_date
+        description: "Date the transaction occurred"
+        data_tests:
+          - not_null
+
+      - name: post_date
+        description: "Date the transaction posted"
+        data_tests:
+          - not_null
+
+      - name: transaction_type
+        description: "Transaction type/category (renamed from raw `type` column)"
+
+      - name: merchant
+        description: "Free-text transaction description (renamed from raw `details` column)"
+
+      - name: amount_CAD
+        description: "Transaction amount in CAD"
+        data_tests:
+          - not_null
+
+      - name: currency
+        description: "Currency code"
+        data_tests:
+          - not_null

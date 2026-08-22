@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: fct_ws__cc_statements
+    description: >
+      Fact table of credit card transactions, joined against the merchant
+      category dimension to provide a spending category and the model's
+      reasoning per transaction. Category and reasoning are null for
+      transactions whose merchant has not yet been classified.
+    columns:
+      - name: transaction_date
+        description: Date the transaction occurred.
+        tests:
+          - not_null
+
+      - name: post_date
+        description: Date the transaction posted to the account.
+
+      - name: transaction_type
+        description: Type of transaction (e.g. Purchase, Payment, Monthly fee).
+
+      - name: merchant
+        description: Raw merchant string from the statement. Join key to dim_ws__transaction_categories.
+        tests:
+          - not_null
+
+      - name: amount_CAD
+        description: Transaction amount.
+        tests:
+          - not_null
+
+      - name: currency
+        description: Transaction currency.
+
+      - name: transaction_category
+        description: Spending category joined in from dim_ws__transaction_categories. Null if the merchant hasn't been classified yet.
+
+      - name: category_reasoning
+        description: Model's one-sentence justification for the assigned category, joined in from dim_ws__transaction_categories. Null if the merchant hasn't been classified yet.

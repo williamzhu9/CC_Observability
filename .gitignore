@@ -1,0 +1,6 @@
+
+target/
+dbt_packages/
+logs/
+CC_Statements/
+Credit Card Spend.pbix
