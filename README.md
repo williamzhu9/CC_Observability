@@ -1,15 +1,5 @@
-Welcome to your new dbt project!
+### Credit Card Observability
 
-### Using the starter project
+This project was made to gain transparency and trend analysis into the distribution of spending from my credit card statements. Each raw credit card statement is first uploaded to a GCS bucket, then landed into bigquery where it is then cleaned, transformed, and processing using DBT. The final marts table contains each transaction's date, type, merchant, amount, and category which is then pulled into a PowerBI report and visualized.
 
-Try running the following commands:
-- dbt run
-- dbt test
-
-
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+Note that the raw data and PowerBI model have been obfuscated for privacy reasons.
