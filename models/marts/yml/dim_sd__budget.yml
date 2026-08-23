@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: dim_sd__budget
+    description: >
+      Budget dimension containing budget items, planned amounts, associated
+      accounts, and the mapped transaction category used by downstream models.
+      Savings items may have a null transaction category because they are not
+      mapped to the budget category seed.
+    columns:
+      - name: budget_key
+        description: Unique key for a budget item generated from its category, item, amounts, and account fields.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: budget_category
+        description: High-level category assigned to the budget item.
+
+      - name: item
+        description: Budget item or line description.
+
+      - name: amount
+        description: Budget amount.
+
+      - name: amount_bi_weekly
+        description: Budget amount on a bi-weekly basis.
+
+      - name: payment_account
+        description: Account used to make the payment.
+
+      - name: holding_account
+        description: Account holding the budgeted funds.
+
+      - name: transaction_category
+        description: Transaction category mapped from the budget item seed; null when no mapping exists.

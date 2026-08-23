@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: stg_gs__budget
+    description: "Staged budget data, renamed and keyed from the raw Google Sheets budget source."
+    columns:
+      - name: budget_key
+        description: "Unique key for a budget item generated from its category, item, amounts, and account fields."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: budget_category
+        description: "Budget category."
+
+      - name: item
+        description: "Budget item or line description."
+
+      - name: amount
+        description: "Budget amount."
+
+      - name: amount_bi_weekly
+        description: "Budget amount on a bi-weekly basis."
+
+      - name: payment_account
+        description: "Account used to make the payment."
+
+      - name: holding_account
+        description: "Account holding the budgeted funds."

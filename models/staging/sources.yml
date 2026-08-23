@@ -34,3 +34,13 @@ sources:
         freshness:
           warn_after: {count: 32, period: day}   # monthly cadence, so give some slack
           error_after: {count: 45, period: day}
+  - name: gsheets
+    schema: cc_obs_raw
+    tables:
+      - name: budget_raw
+        external:
+          location: "https://docs.google.com/spreadsheets/d/1ciFSAxUoe3YpQpaKUYDi2IID5zng-E9EG4j82AQmj8c/edit?usp=sharing"
+          options:
+            format: google_sheets
+            sheet_range: "Budget!A1:F13"
+            skip_leading_rows: 1       
