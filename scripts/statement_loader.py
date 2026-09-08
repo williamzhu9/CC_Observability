@@ -1,11 +1,11 @@
 """
-load_cc_statement.py
+statement_loader.py
 
 Uploads a local monthly CC statement CSV to GCS, then loads/appends it into
 a continuously growing BigQuery table.
 
 Usage:
-    python load_cc_statement.py --file /path/to/CCStatement-Aug2026.csv
+    python statement_loader.py --file /path/to/CCStatement-Aug2026.csv
 
 Requires:
     pip install google-cloud-storage google-cloud-bigquery
