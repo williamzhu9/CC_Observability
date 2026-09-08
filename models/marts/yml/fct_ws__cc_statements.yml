@@ -3,11 +3,18 @@ version: 2
 models:
   - name: fct_ws__cc_statements
     description: >
-      Fact table of credit card transactions, joined against the merchant
-      category dimension to provide a spending category and the model's
-      reasoning per transaction. Category and reasoning are null for
-      transactions whose merchant has not yet been classified.
+      Incremental fact table of credit card transactions, joined against the
+      merchant category dimension to provide a spending category per transaction.
+      Only transaction keys not already in the fact table are processed.
+      Historical categories remain unchanged until a full refresh. Category is
+      null for transactions whose merchant has not yet been classified.
     columns:
+      - name: transaction_key
+        description: Surrogate key from staging identifying each transaction occurrence.
+        tests:
+          - unique
+          - not_null
+
       - name: transaction_date
         description: Date the transaction occurred.
         tests:
@@ -34,6 +41,3 @@ models:
 
       - name: transaction_category
         description: Spending category joined in from dim_ws__transaction_categories. Null if the merchant hasn't been classified yet.
-
-      - name: category_reasoning
-        description: Model's one-sentence justification for the assigned category, joined in from dim_ws__transaction_categories. Null if the merchant hasn't been classified yet.
